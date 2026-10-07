@@ -1,0 +1,542 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+   ========================= */
+
+body {
+    color: white;
+    background-color: rgb(30, 1, 40);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 16px;
+    margin: 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    padding: 0 50px;
+}
+
+nav ul {
+    display: flex;
+    gap: 35px;
+    width: fit-content;
+}
+
+nav a:hover {
+    color: rgb(211, 6, 6);
+}
+
+img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 3px solid rgb(206, 5, 5);
+    margin: 30px 45px;
+}
+
+.center {
+    text-align: left;
+}
+
+h1 {
+    color: rgb(195, 9, 9);
+    font-size: 40px;
+    text-decoration: underline;
+}
+
+
+/* =========================
+   CINE QUIZ
+   ========================= */
+
+#quiz {
+    position: relative;
+
+    max-width: 850px;
+    margin: 55px auto;
+    padding: 40px;
+
+    text-align: center;
+
+    background: linear-gradient(
+        145deg,
+        rgba(73, 7, 91, 0.97),
+        rgba(38, 2, 48, 0.99)
+    );
+
+    border: 2px solid rgb(195, 9, 9);
+    border-radius: 24px;
+
+    box-shadow:
+        0 0 0 5px rgba(195, 9, 9, 0.08),
+        0 15px 40px rgba(0, 0, 0, 0.45);
+
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+/* =========================
+   FAIXA DE PELÍCULA
+   ========================= */
+
+#quiz::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 9px;
+
+    background: repeating-linear-gradient(
+        90deg,
+        rgb(195, 9, 9) 0px,
+        rgb(195, 9, 9) 30px,
+        white 30px,
+        white 42px,
+        rgb(195, 9, 9) 42px,
+        rgb(195, 9, 9) 72px
+    );
+}
+
+
+/* =========================
+   TÍTULO COM DETALHE DE CLAQUETE
+   ========================= */
+
+#quiz h1 {
+    position: relative;
+
+    display: inline-block;
+
+    margin-top: 45px;
+    margin-bottom: 10px;
+
+    padding: 18px 35px 14px;
+
+    color: white;
+    font-size: 38px;
+
+    text-decoration: none;
+
+    background-color: rgb(30, 1, 40);
+
+    border: 3px solid white;
+    border-radius: 8px;
+
+    box-shadow: 8px 8px 0 rgb(195, 9, 9);
+}
+
+
+/* Parte superior da claquete */
+#quiz h1::before {
+    content: "";
+
+    position: absolute;
+
+    top: -17px;
+    left: -3px;
+
+    width: calc(100% + 6px);
+    height: 15px;
+
+    background: repeating-linear-gradient(
+        120deg,
+        white 0px,
+        white 13px,
+        rgb(30, 1, 40) 13px,
+        rgb(30, 1, 40) 25px
+    );
+
+    border: 3px solid white;
+    border-radius: 5px 5px 0 0;
+}
+
+
+/* =========================
+   ESTRELAS DECORATIVAS
+   ========================= */
+
+#quiz h1::after {
+    content: "✦   ✧   ✦";
+
+    position: absolute;
+
+    top: -65px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 200px;
+
+    color: white;
+    font-size: 22px;
+    letter-spacing: 8px;
+}
+
+
+/* =========================
+   SUBTÍTULO
+   ========================= */
+
+#quiz h2 {
+    color: white;
+
+    font-size: 21px;
+    font-weight: normal;
+
+    margin: 30px 0 40px;
+
+    letter-spacing: 0.5px;
+}
+
+#quiz h2::before {
+    content: "";
+
+    display: block;
+
+    width: 80%;
+    height: 5px;
+
+    margin: 0 auto 25px;
+
+    background: repeating-linear-gradient(
+        90deg,
+        rgb(195, 9, 9) 0px,
+        rgb(195, 9, 9) 10px,
+        transparent 10px,
+        transparent 18px
+    );
+}
+
+
+/* =========================
+   PERGUNTA
+   ========================= */
+
+#pergunta {
+    font-size: 25px;
+
+    margin: 30px 0;
+
+    line-height: 1.4;
+
+    color: white;
+}
+
+
+/* =========================
+   OPÇÕES
+   ========================= */
+
+#opcoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+#opcoes button {
+    width: 85%;
+
+    padding: 16px 22px;
+
+    border: 2px solid rgb(195, 9, 9);
+    border-radius: 12px;
+
+    background-color: rgba(30, 1, 40, 0.85);
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#opcoes button:hover {
+    background-color: rgb(195, 9, 9);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 15px rgba(195, 9, 9, 0.35);
+}
+
+#opcoes button.selecionada {
+    background-color: rgb(195, 9, 9);
+
+    box-shadow: 0 5px 15px rgba(195, 9, 9, 0.4);
+}
+
+
+/* =========================
+   BOTÃO PRÓXIMA / VER RESULTADO
+   ========================= */
+
+#proximo {
+    margin-top: 30px;
+
+    padding: 13px 32px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: rgb(195, 9, 9);
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#proximo:hover {
+    background-color: rgb(211, 6, 6);
+
+    transform: scale(1.03);
+
+    box-shadow: 0 5px 15px rgba(195, 9, 9, 0.4);
+}
+
+#proximo:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================
+   RESULTADO
+   ========================= */
+
+#resultado {
+    position: relative;
+
+    max-width: 850px;
+
+    margin: 55px auto;
+
+    padding: 40px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(73, 7, 91, 0.97),
+        rgba(38, 2, 48, 0.99)
+    );
+
+    border: 2px solid rgb(195, 9, 9);
+    border-radius: 24px;
+
+    box-shadow:
+        0 0 0 5px rgba(195, 9, 9, 0.08),
+        0 15px 40px rgba(0, 0, 0, 0.45);
+
+    box-sizing: border-box;
+
+    line-height: 1.6;
+
+    overflow: hidden;
+}
+
+
+/* Faixa de película do resultado */
+#resultado::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 9px;
+
+    background: repeating-linear-gradient(
+        90deg,
+        rgb(195, 9, 9) 0px,
+        rgb(195, 9, 9) 30px,
+        white 30px,
+        white 42px,
+        rgb(195, 9, 9) 42px,
+        rgb(195, 9, 9) 72px
+    );
+}
+
+
+#resultado h2 {
+    color: rgb(195, 9, 9);
+
+    font-size: 30px;
+
+    text-align: center;
+
+    margin-top: 25px;
+}
+
+#resultado p {
+    font-size: 18px;
+}
+
+
+/* Lista de filmes */
+#resultado ul {
+    display: block;
+
+    padding: 10px 0 10px 25px;
+}
+
+#resultado li {
+    margin: 8px 0;
+
+    list-style-type: disc;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   BOTÃO REFAZER
+   ========================= */
+
+#resultado button {
+    display: block;
+
+    margin: 30px auto 0;
+
+    padding: 13px 28px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: rgb(195, 9, 9);
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#resultado button:hover {
+    background-color: rgb(211, 6, 6);
+
+    transform: scale(1.03);
+
+    box-shadow: 0 5px 15px rgba(195, 9, 9, 0.4);
+}
+
+
+/* =========================
+   ROLO DE FILME DECORATIVO
+   ========================= */
+
+#quiz::after {
+    content: "";
+
+    position: absolute;
+
+    width: 55px;
+    height: 55px;
+
+    right: 25px;
+    bottom: 25px;
+
+    border: 7px dotted white;
+
+    border-radius: 50%;
+
+    opacity: 0.35;
+}
+
+
+/* =========================
+   CELULAR
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 0 20px;
+    }
+
+    nav ul {
+        gap: 18px;
+        padding: 16px 0;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    #quiz,
+    #resultado {
+        margin: 30px auto;
+        padding: 22px;
+    }
+
+    #quiz h1 {
+        font-size: 29px;
+
+        padding: 15px 25px 12px;
+
+        margin-top: 40px;
+    }
+
+    #quiz h1::after {
+        font-size: 17px;
+        top: -52px;
+    }
+
+    #quiz h2 {
+        font-size: 18px;
+    }
+
+    #pergunta {
+        font-size: 21px;
+    }
+
+    #opcoes button {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #resultado h2 {
+        font-size: 25px;
+    }
+
+    #resultado {
+        font-size: 16px;
+    }
+}
+
+section p {
+    font-size: 25px;
+}
