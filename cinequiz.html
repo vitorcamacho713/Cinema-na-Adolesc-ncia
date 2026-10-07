@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Adolescente</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+     <div class="container">
+
+         <nav>
+        <ul>
+            <li>
+                <a href="index.html">Conheça nosso grupo</a>
+            </li> 
+            <li>
+                <a href="ourarticle.html">Nosso Artigo</a>
+            </li> 
+            <li>
+                <a href="cinequiz.html">Cine Quiz</a>
+            </li>
+        </ul> 
+    </nav>
+    <h1>Cine Quiz</h1>
+        <h2>Descubra qual perfil cinematográfico combina mais com você!</h2>
+        <h3> 
+            Com base nas suas respostas, vamos analisar e descobrir qual dos nossos integrantes você mais se identifica. Com isso, você poderá se conhecer melhor e descobrir qual estilo de filme mais combina com você. Vamos começar o quiz e descobrir juntos!
+        </h3>
+
+        <div id="quiz">
+
+            <h3 id="pergunta"></h3>
+
+            <div id="opcoes"></div>
+
+            <button id="proximo" disabled>Próxima</button>
+
+        </div>
+
+        <div id="resultado" style="display: none;">
+
+            <h2>Seu resultado!</h2>
+
+            <p id="resultadoTexto"></p>
+
+            <button onclick="reiniciarQuiz()">Refazer quiz</button>
+
+        </div>
+
+        <script>
+            const perguntas = [
+                {
+                    pergunta: "Qual gênero de filme você mais gosta?",
+                    opcoes: [
+                        ["Comédia", [2, 1, 1, 0, 0]],
+                        ["Romance", [1, 2, 1, 0, 1]],
+                        ["Drama", [0, 1, 0, 2, 2]],
+                        ["Ação", [2, 1, 1, 0, 0]],
+                        ["Suspense", [1, 0, 0, 1, 2]]
+                    ]
+                },
+
+                {
+                    pergunta: "O que te prende mais em um filme?",
+                    opcoes: [
+                        ["Uma história emocionante", [1, 1, 0, 2, 2]],
+                        ["Personagens marcantes", [2, 2, 1, 1, 0]],
+                        ["Mistérios e reviravoltas", [0, 1, 0, 1, 2]],
+                        ["Ação e adrenalina", [2, 1, 1, 0, 0]]
+                    ]
+                },
+
+                {
+                    pergunta: "Qual tipo de final você prefere?",
+                    opcoes: [
+                        ["Final feliz", [2, 2, 1, 0, 0]],
+                        ["Final triste e emocionante", [0, 0, 1, 1, 2]],
+                        ["Final aberto", [0, 1, 0, 2, 1]]
+                    ]
+                },
+
+                {
+                    pergunta: "Qual cenário você escolheria para um filme?",
+                    opcoes: [
+                        ["Uma cidade grande e movimentada", [2, 1, 1, 2, 0]],
+                        ["Um universo fantástico", [1, 2, 2, 0, 0]],
+                        ["Uma cidade pequena e misteriosa", [0, 0, 1, 2, 1]],
+                        ["Uma casa com vários problemas relacionais", [0, 0, 1, 1, 2]]
+                    ]
+                },
+
+                {
+                    pergunta: "Qual tipo de protagonista você prefere?",
+                    opcoes: [
+                        ["Um herói corajoso", [1, 2, 1, 0, 0]],
+                        ["O engraçado do grupo", [2, 1, 1, 0, 0]],
+                        ["Um cara misterioso e fechado", [0, 0, 1, 1, 2]],
+                        ["Alguém complexo e profundo", [0, 1, 0, 2, 1]]
+                    ]
+                },
+
+                {
+                    pergunta: "Você prefere assistir um filme para:",
+                    opcoes: [
+                        ["Rir das situações e personagens", [2, 1, 0, 0, 0]],
+                        ["Chorar pela história", [1, 1, 0, 1, 2]],
+                        ["Ficar pensativo e criar senso crítico", [0, 0, 1, 2, 1]],
+                        ["Me imaginar em outro universo", [1, 2, 2, 0, 0]]
+                    ]
+                },
+
+                {
+                    pergunta: "Você prefere filmes baseados em:",
+                    opcoes: [
+                        ["Livros, adaptações são meu forte", [1, 2, 1, 0, 0]],
+                        ["Quadrinhos e HQs, como dos super-heróis", [2, 0, 1, 0, 0]],
+                        ["Histórias reais e fatos que aconteceram", [0, 0, 1, 1, 2]],
+                        ["Roteiros originais, que conquistaram pela história única", [0, 1, 1, 2, 2]]
+                    ]
+                },
+
+                {
+                    pergunta: "Qual ritmo de filme você prefere?",
+                    opcoes: [
+                        ["Acelerado, com várias coisas acontecendo", [2, 0, 1, 2, 0]],
+                        ["Equilibrado, momentos rápidos e lentos", [0, 2, 2, 1, 0]],
+                        ["Lentos e focados em construir uma narrativa", [1, 0, 0, 1, 2]],
+                        ["Não me incomoda, desde que não exagere", [0, 1, 1, 0, 2]]
+                    ]
+                }
+            ];
+
+            const nomes = ["Vitor", "Luiza", "Sofia", "Nina", "Aime"];
+
+            let perguntaAtual = 0;
+            let respostas = [];
+
+            const pergunta = document.getElementById("pergunta");
+            const opcoes = document.getElementById("opcoes");
+            const proximo = document.getElementById("proximo");
+
+            function mostrarPergunta() {
+                const atual = perguntas[perguntaAtual];
+
+                pergunta.textContent = atual.pergunta;
+                opcoes.innerHTML = "";
+
+                atual.opcoes.forEach((opcao, indice) => {
+                    const botao = document.createElement("button");
+
+                    botao.textContent = opcao[0];
+                    botao.className = "opcao";
+
+                    botao.onclick = () => {
+                        respostas[perguntaAtual] = indice;
+
+                        document.querySelectorAll(".opcao").forEach(btn => {
+                            btn.classList.remove("selecionada");
+                        });
+
+                        botao.classList.add("selecionada");
+                        proximo.disabled = false;
+                    };
+
+                    opcoes.appendChild(botao);
+                });
+
+                proximo.disabled = respostas[perguntaAtual] === undefined;
+
+                if (perguntaAtual === perguntas.length - 1) {
+                    proximo.textContent = "Ver resultado";
+                } else {
+                    proximo.textContent = "Próxima";
+                }
+            }
+
+            proximo.onclick = () => {
+                if (perguntaAtual < perguntas.length - 1) {
+                    perguntaAtual++;
+                    mostrarPergunta();
+                } else {
+                    mostrarResultado();
+                }
+            };
+
+           function mostrarResultado() {
+    const pontos = [0, 0, 0, 0, 0];
+
+    respostas.forEach((resposta, indicePergunta) => {
+        const pontuacao =
+            perguntas[indicePergunta].opcoes[resposta][1];
+
+        pontuacao.forEach((valor, pessoa) => {
+            pontos[pessoa] += valor;
+        });
+    });
+
+    const maiorPontuacao = Math.max(...pontos);
+
+    const vencedores = nomes.filter(
+        (_, indice) => pontos[indice] === maiorPontuacao
+    );
+
+    const perfis = {
+        "Vitor": {
+            titulo: "Vitor",
+            texto: `
+                <p>Aqui você encontra de tudo: aventuras e heróis (às vezes improváveis), realidades distópicas, filmes de conforto pra ver domingo à tarde e até os clássicos da comédia. Não sei em qual das categorias você se identificou, mas deveria dar uma chance para esses filmes:</p>
+                <ul>
+                    <li>Homem-Aranha 2 (2004)</li>
+                    <li>Thor: Ragnarok (2017)</li>
+                    <li>Mamma Mia! (2008)</li>
+                    <li>O Diabo Veste Prada (2006)</li>
+                    <li>Gente Grande (2010)</li>
+                    <li>Minha Mãe É uma Peça 3 (2019)</li>
+                    <li>Truque de Mestre (2013)</li>
+                    <li>Jogos Vorazes: Em Chamas (2013)</li>
+                </ul>
+            `
+        },
+
+        "Luiza": {
+            titulo: "Luiza",
+            texto: `
+                <p>Se você curte animações emocionantes, adaptações clássicas de livros feitas nos anos 2000 e filmes de fantasia, com um toque de ficção científica, essa lista é para você!</p>
+                <ul>
+                    <li>Megamente (2010)</li>
+                    <li>Toy Story (1995)</li>
+                    <li>Senhor dos Anéis: A Sociedade do Anel (2001)</li>
+                    <li>Crepúsculo (2008)</li>
+                    <li>Orgulho e Preconceito (2005)</li>
+                    <li>De Volta Para o Futuro (1985)</li>
+                    <li>Curtindo a Vida Adoidado (1986)</li>
+                </ul>
+            `
+        },
+
+        "Nina": {
+            titulo: "Nina",
+            texto: `
+                <p>Se você gosta de uma boa história ou um filme emocionante de drama de qualquer época, além de filmes do cinema reflexivo que te fazem pensar neles por horas, é dessa lista que você precisa:</p>
+                <ul>
+                    <li>Lady Bird (2017)</li>
+                    <li>O Segredo de Brokeback Mountain (2005)</li>
+                    <li>Antes do Amanhecer (1995)</li>
+                    <li>Aftersun (2022)</li>
+                    <li>Até os Ossos (2022)</li>
+                    <li>O Profissional (1994)</li>
+                    <li>A Viagem de Chihiro (2001)</li>
+                    <li>Moonrise Kingdom (2012)</li>
+                    <li>Monster (2023)</li>
+                </ul>
+            `
+        },
+
+        "Sofia": {
+            titulo: "Sofia",
+            texto: `
+                <p>Uma lista adolescente e obrigatória: clássicos que atingiram o público teen ao longo dos anos, incluindo algumas animações muito marcantes! Essa lista é o convite perfeito para você que ama esse universo:</p>
+                <ul>
+                    <li>Coraline (2009)</li>
+                    <li>O Estranho Mundo de Jack (1993)</li>
+                    <li>A Viagem de Chihiro (2001)</li>
+                    <li>Harry Potter e o Prisioneiro de Azkaban (2004)</li>
+                    <li>As Vantagens de Ser Invisível (2012)</li>
+                    <li>Clube da Luta (1999)</li>
+                    <li>Jogos Vorazes (2012)</li>
+                    <li>Donnie Darko (2001)</li>
+                </ul>
+            `
+        },
+
+        "Aime": {
+            titulo: "Aime",
+            texto: `
+                <p>Além de bastante variado, seu gosto provavelmente abrange filmes com histórias intensas e personagens complexos, explorando as questões humanas de cada um de uma forma única e original de construir uma narrativa. Essa lista é para você:</p>
+                <ul>
+                    <li>Hamnet (2025)</li>
+                    <li>A Pior Pessoa do Mundo (2021)</li>
+                    <li>Filadélfia (1993)</li>
+                    <li>Reservoir Dogs (1992)</li>
+                    <li>O Brutalista (2024)</li>
+                    <li>Bugonia (2025)</li>
+                    <li>Babilônia (2022)</li>
+                    <li>O Silêncio dos Inocentes (1991)</li>
+                </ul>
+            `
+        }
+    };
+
+    let resultado = "";
+
+    if (vencedores.length === 1) {
+        const perfil = perfis[vencedores[0]];
+
+        resultado = `
+            <h2>Você parece mais com ${perfil.titulo}!</h2>
+            ${perfil.texto}
+        `;
+    } else {
+        resultado = `
+            <h2>Você tem um perfil misto!</h2>
+            <p>
+                Suas respostas combinaram com mais de um perfil:
+                ${vencedores.join(" e ")}.
+                Isso mostra que seu gosto cinematográfico mistura
+                características diferentes! Veja a lista de filmes recomendados para cada perfil e descubra quais você mais gosta.
+               
+                <ul>
+                    <li>Vitor:
+                    <li>Homem-Aranha 2 (2004)</li>
+                    <li>Thor: Ragnarok (2017)</li>
+                    <li>Mamma Mia! (2008)</li>
+                    <li>O Diabo Veste Prada (2006)</li>
+                    <li>Gente Grande (2010)</li>
+                    <li>Minha Mãe É uma Peça 3 (2019)</li>
+                    <li>Truque de Mestre (2013)</li>
+                    <li>Jogos Vorazes: Em Chamas (2013)</li>
+                </ul>
+                 <ul>
+                    <li>Luiza:
+                    <li>Megamente (2010)</li>
+                    <li>Toy Story (1995)</li>
+                    <li>Senhor dos Anéis: A Sociedade do Anel (2001)</li>
+                    <li>Crepúsculo (2008)</li>
+                    <li>Orgulho e Preconceito (2005)</li>
+                    <li>De Volta Para o Futuro (1985)</li>
+                    <li>Curtindo a Vida Adoidado (1986)</li>
+                </ul>
+                 <ul>
+                    <li>Nina:
+                    <li>Lady Bird (2017)</li>
+                    <li>O Segredo de Brokeback Mountain (2005)</li>
+                    <li>Antes do Amanhecer (1995)</li>
+                    <li>Aftersun (2022)</li>
+                    <li>Até os Ossos (2022)</li>
+                    <li>O Profissional (1994)</li>
+                    <li>A Viagem de Chihiro (2001)</li>
+                    <li>Moonrise Kingdom (2012)</li>
+                    <li>Monster (2023)</li>
+                </ul>
+                <ul>
+                    <li>Sofia:
+                    <li>Coraline (2009)</li>
+                    <li>O Estranho Mundo de Jack (1993)</li>
+                    <li>A Viagem de Chihiro (2001)</li>
+                    <li>Harry Potter e o Prisioneiro de Azkaban (2004)</li>
+                    <li>As Vantagens de Ser Invisível (2012)</li>
+                    <li>Clube da Luta (1999)</li>
+                    <li>Jogos Vorazes (2012)</li>
+                    <li>Donnie Darko (2001)</li>
+                </ul>
+                <ul>
+                    <li>Aime:
+                    <li>Hamnet (2025)</li>
+                    <li>A Pior Pessoa do Mundo (2021)</li>
+                    <li>Filadélfia (1993)</li>
+                    <li>Reservoir Dogs (1992)</li>
+                    <li>O Brutalista (2024)</li>
+                    <li>Bugonia (2025)</li>
+                    <li>Babilônia (2022)</li>
+                    <li>O Silêncio dos Inocentes (1991)</li>
+
+
+            </p>
+        `;
+    }
+
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("resultado").style.display = "block";
+    document.getElementById("resultadoTexto").innerHTML = resultado;
+}
+
+            function reiniciarQuiz() {
+                perguntaAtual = 0;
+                respostas = [];
+
+                document.getElementById("quiz").style.display = "block";
+                document.getElementById("resultado").style.display = "none";
+
+                mostrarPergunta();
+            }
+
+            mostrarPergunta();
+        </script>
